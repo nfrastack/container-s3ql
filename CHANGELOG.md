@@ -1,3 +1,8 @@
+## 1.6.99 2025-08-17 <dave at tiredofit dot ca>
+
+Provide notification of Image EOL
+
+
 ## 1.6.21 2025-05-10 <dave at tiredofit dot ca>
 
    ### Added
