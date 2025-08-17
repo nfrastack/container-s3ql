@@ -1,0 +1,45 @@
+#!/command/with-contenv bash
+# SPDX-FileCopyrightText: © 2025 Nfrastack <code@nfrastack.com>
+#
+# SPDX-License-Identifier: MIT
+
+source /container/base/functions/container/init
+SERVICE_NAME="s3ql"
+prepare_service defaults single
+
+check_container_initialized
+check_service_initialized init
+
+if var_true "${ENABLE_CACHE}" ; then
+    s3ql_cachedir_arg="--cachedir ${CACHE_PATH} "
+    if [ "${CACHE_SIZE,,}" != "auto" ] ; then
+        s3ql_cache_size="--cachesize ${CACHE_SIZE}"
+    fi
+
+    if var_true "${ENABLE_PERSISTENT_CACHE}" ; then
+        s3ql_cache_peresistent_arg="--keep-cache"
+    fi
+fi
+
+if [ "${LOG_TYPE,,}" = "file" ] ; then
+    exec_arg=silent
+    log_s3ql="${LOG_PATH}"/$(date +'%Y%m%d%H%M%S')-mount_$(echo "${S3_HOST}" | cut -d / -f 4).log
+else
+    log_s3ql="none"
+fi
+
+transform_var file \
+                    MOUNT_ARGS \
+                    S3_HOST
+
+liftoff
+source /opt/s3ql/bin/activate
+print_start "Starting S3QL ${S3QL_VERSION} for host: '${S3_HOST}'"
+${exec_arg} exec /opt/s3ql/bin/mount.s3ql \
+                                        --authfile "${CONFIG_PATH}"/"${CONFIG_FILE}" \
+                                        --allow-other \
+                                        --compress "${COMPRESSION}" \
+                                        --fg \
+                                        --log "${log_s3ql}" \
+                                        ${s3ql_cachedir_arg} ${s3ql_cache_persistent_arg} ${s3ql_cache_size} ${MOUNT_ARGS} "${S3_HOST}" \
+                                        "${DATA_PATH}"

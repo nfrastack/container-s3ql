@@ -1,3 +1,11 @@
+## 2.0.0 2025-08-17 <dave at tiredofit dot ca>
+
+   ### Added
+      - Switch to nfrastack/container-base
+      - Alpine 3.22
+      - Use UV for dependency management
+
+
 ## 1.6.99 2025-08-17 <dave at tiredofit dot ca>
 
 Provide notification of Image EOL

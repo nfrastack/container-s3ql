@@ -1,0 +1,14 @@
+#!/command/with-contenv bash
+# SPDX-FileCopyrightText: © 2025 Nfrastack <code@nfrastack.com>
+#
+# SPDX-License-Identifier: MIT
+
+source /container/base/functions/container/init
+SERVICE_NAME="s3ql"
+
+prepare_service
+
+s3ql_bootstrap_filesystem
+s3ql_setup_s3ql
+
+liftoff

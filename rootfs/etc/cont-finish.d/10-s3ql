@@ -1,0 +1,15 @@
+#!/command/with-contenv bash
+# SPDX-FileCopyrightText: © 2025 Nfrastack <code@nfrastack.com>
+#
+# SPDX-License-Identifier: MIT
+
+## TODO - This should reside in /container
+source /container/base/functions/container/init
+prepare_service
+
+SERVICE_NAME="s3ql"
+
+source /opt/s3ql/bin/activate
+silent umount -a -t /opt/s3ql/bin/fuse.s3ql
+force-dismount
+

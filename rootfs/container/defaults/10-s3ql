@@ -1,0 +1,22 @@
+# SPDX-FileCopyrightText: © 2025 Nfrastack <code@nfrastack.com>
+#
+# SPDX-License-Identifier: MIT
+
+#
+CACHE_PATH=${CACHE_PATH:-"/cache/"}
+CONFIG_PATH=${CONFIG_PATH:-"/config/"}
+DATA_PATH=${DATA_PATH:-"/data/"}
+LOG_PATH=${LOG_PATH:-"/logs/"}
+#
+
+CACHE_SIZE=${CACHE_SIZE:-"auto"}
+CACHE_PATH=${CACHE_PATH:-"/cache/"}
+COMPRESSION=${COMPRESSION:-"lzma-6"}
+CONFIG_FILE=${CONFIG_FILE:-"s3ql.conf"}
+ENABLE_CACHE=${ENABLE_CACHE:-"TRUE"}
+ENABLE_PERSISTENT_CACHE=${ENABLE_PERSISTENT_CACHE:-"TRUE"}
+MODE=${MODE:-"NORMAL"}
+LOG_TYPE=${LOG_TYPE:-"FILE"}
+S3QL_SETUP_MODE=${S3QL_SETUP_MODE:-"AUTO"}
+
+get_defaults_advanced

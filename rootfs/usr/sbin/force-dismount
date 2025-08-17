@@ -1,8 +1,13 @@
-#/bin/bash
-source /assets/functions/00-container
-source /assets/defaults/10-s3ql
-PROCESS_NAME=force-dismount
+#!/command/with-contenv bash
+# SPDX-FileCopyrightText: © 2025 Nfrastack <code@nfrastack.com>
+#
+# SPDX-License-Identifier: MIT
 
+source /container/base/functions/container/init
+source /container/defaults/10-s3ql
+SERVICE_NAME=force-dismount
+
+source /opt/s3ql/bin/activate
 S3QL_DISCONNECTED_ENDPOINTS=$(df 2>&1 | grep "Transport endpoint is not connected" | awk '{ print $2 }' | tr -d '‘' | tr -d '’:')
 if [[ "${S3QL_DISCONNECTED_ENDPOINTS}" ]]; then
     for s3qlfs in $S3QL_DISCONNECTED_ENDPOINTS; do

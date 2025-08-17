@@ -1,7 +1,7 @@
 services:
 
   s3ql-app:
-    image: tiredofit/s3ql:latest
+    image: docker.io/nfrastack/s3ql:latest
     container_name: s3ql-app
     volumes:
       - ./cache:/cache
@@ -19,7 +19,7 @@ services:
 
       - MODE=normal
 
-      - S3_HOST=s3c://s3.ca-central-1.wasabisys.com:443/bucket_name
+      - S3_HOST=s3c://s3.host:443/bucket_name
       - S3_KEY_ID=supersecretid
       - S3_KEY_SECRET=supersecretsecret
       - S3QL_PASS=encryptedpassword
