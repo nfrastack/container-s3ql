@@ -2,7 +2,7 @@
 
 ## About
 
-This repository will build a container for [S3QL](http://www.rath.org/s3ql-docs/)), A deduplicating, compressing virtual filesystem that works on S3 compatible buckets.
+This repository will build a container for [S3QL](http://www.rath.org/s3ql-docs/), A deduplicating, compressing virtual filesystem that works on S3 compatible buckets.
 
 ## Maintainer
 
