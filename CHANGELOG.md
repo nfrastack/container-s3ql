@@ -1,3 +1,9 @@
+## 2.0.1 2025-08-28 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Fix issue with defaults not loading correctly
+
+
 ## 2.0.0 2025-08-17 <dave at tiredofit dot ca>
 
    ### Added
