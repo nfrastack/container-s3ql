@@ -66,7 +66,7 @@ RUN echo "" && \
     uv venv /opt/s3ql && \
     source /opt/s3ql/bin/activate && \
     uv pip install \
-                    "apsw>=3.7.0" \
+                    "apsw>=3.42.0" \
                     cryptography \
                     cython \
                     defusedxml \
@@ -81,14 +81,8 @@ RUN echo "" && \
                     setuptools \
                     "trio>=0.15" \
                     && \
-   \
-   export CI=true ; ./setup.py \
-                                build_cython \
-                                build_ext \
-                                --inplace \
-                                install \
-                                && \
-    \
+    uv build && \
+    uv pip install dist/*.whl && \
     mkdir -p /opt/s3ql/share && \
     cp -R contrib/* /opt/s3ql/share && \
     \
