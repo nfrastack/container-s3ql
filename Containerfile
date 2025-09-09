@@ -9,9 +9,6 @@ ARG     \
 
 FROM ${BASE_IMAGE}:${DISTRO}_${DISTRO_VARIANT}
 
-FROM ghcr.io/nfrastack/container-base:alpine_3.22
-
-
 LABEL \
         org.opencontainers.image.title="S3QL" \
         org.opencontainers.image.description="FUSE Filesystem over top of remote S3 Buckets" \
@@ -23,15 +20,15 @@ LABEL \
         org.opencontainers.image.licenses="MIT"
 
 ARG \
-    S3QL_REPO_URL \
-    S3QL_VERSION
+    S3QL_REPO_URL="https://github.com/s3ql/s3ql" \
+    S3QL_VERSION="s3ql-5.3.0"
 
 COPY CHANGELOG.md /usr/src/container/CHANGELOG.md
 COPY LICENSE /usr/src/container/LICENSE
 COPY README.md /usr/src/container/README.md
 
-ENV S3QL_VERSION=${S3QL_VERSION:-"s3ql-5.3.0"} \
-    S3QL_REPO_URL=https://github.com/s3ql/s3ql \
+ENV \
+    CONTAINER_ENABLE_SCHEDULING=TRUE \
     IMAGE_NAME="nfrastack/s3ql" \
     IMAGE_REPO_URL="https://github.com/nfrastack/container-s3ql/"
 
@@ -57,7 +54,7 @@ RUN echo "" && \
                         && \
     \
     source /container/base/functions/container/build && \
-    container_build_log && \
+    container_build_log image && \
     package update && \
     package upgrade && \
     package install \
@@ -95,6 +92,7 @@ RUN echo "" && \
     mkdir -p /opt/s3ql/share && \
     cp -R contrib/* /opt/s3ql/share && \
     \
+    container_build_log add "S3QL" "${S3QL_VERSION}" "${S3QL_REPO_URL}" && \
     uv pip uninstall \
                     cython \
                     setuptools \

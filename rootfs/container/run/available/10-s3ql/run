@@ -34,7 +34,7 @@ transform_var file \
 
 liftoff
 source /opt/s3ql/bin/activate
-print_start "Starting S3QL ${S3QL_VERSION} for host: '${S3_HOST}'"
+print_start "Starting $(/opt/s3ql/bin/s3qladm --version) for host: '${S3_HOST}'"
 ${exec_arg} exec /opt/s3ql/bin/mount.s3ql \
                                         --authfile "${CONFIG_PATH}"/"${CONFIG_FILE}" \
                                         --allow-other \
