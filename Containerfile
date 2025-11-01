@@ -2,12 +2,10 @@
 #
 # SPDX-License-Identifier: MIT
 
-ARG     \
-        BASE_IMAGE \
-        DISTRO \
-        DISTRO_VARIANT
+ARG \
+    BASE_IMAGE
 
-FROM ${BASE_IMAGE}:${DISTRO}_${DISTRO_VARIANT}
+FROM ${BASE_IMAGE}
 
 LABEL \
         org.opencontainers.image.title="S3QL" \
@@ -21,7 +19,7 @@ LABEL \
 
 ARG \
     S3QL_REPO_URL="https://github.com/s3ql/s3ql" \
-    S3QL_VERSION="s3ql-5.4.0"
+    S3QL_VERSION="s3ql-5.4.1"
 
 COPY CHANGELOG.md /usr/src/container/CHANGELOG.md
 COPY LICENSE /usr/src/container/LICENSE
