@@ -11,7 +11,7 @@ sanity_var S3_HOST "S3 Storage URL"
 sanity_var S3_KEY_ID "S3 Key ID"
 sanity_var S3_KEY_SECRET "S3 Key Secret"
 
-log_upgrade="${LOG_PATH}"/$(date +%Y%m%d%H%M%S)-upgrade_$(echo "${S3_HOST}" | cut -d / -f 4).log
+log_upgrade="${LOG_PATH%/}"/$(date +%Y%m%d%H%M%S)-upgrade_$(echo "${S3_HOST}" | cut -d / -f 4).log
 
 if var_true "${ENABLE_CACHE}" ; then
     s3ql_cachedir_arg="--cachedir ${CACHE_PATH}"
@@ -21,5 +21,5 @@ print_notice "Performing S3QL Filesystem check on '${S3_HOST}'"
 source /opt/s3ql/bin/activate
 /opt/s3ql/bin/s3qladm \
                         --log ${log_upgrade} \
-                        --authfile "${CONFIG_PATH}"/"${CONFIG_FILE}" \
+                        --authfile "${CONFIG_PATH%/}"/"${CONFIG_FILE}" \
                         ${s3ql_cachedir_arg} upgrade "${S3_HOST}"

@@ -24,7 +24,7 @@ s3ql_bootstrap_filesystem() {
                             "${LOG_PATH}" \
                             root:root 755
 
-            create_logrotate root "${LOG_PATH}"/*.log root root
+            create_logrotate root "${LOG_PATH%/}"/*.log root root
         ;;
     esac
 }
@@ -48,7 +48,7 @@ s3ql_setup_s3ql() {
         if [ -n "${S3QL_PASS}" ]; then
             s3ql_filesystem_encryption="fs-passphrase: ${S3QL_PASS}"
         fi
-        cat << EOF > "${CONFIG_PATH}"/"${CONFIG_FILE}"
+        cat << EOF > "${CONFIG_PATH%/}"/"${CONFIG_FILE}"
 ## Auto Generated S3QL Configuration - Do not edit, instead set ENV Vars
 ## If you do want to edit this file and add your own custom, set the environment variable 'S3QL_SETUP_TYPE=MANUAL' for next restart of container.
 ## Last Generated on $(TZ=${TIMEZONE} date +'%Y-%m-%d %H:%M:%S %Z')
@@ -60,7 +60,7 @@ backend-password: ${S3_KEY_SECRET}
 ${s3ql_filesystem_encryption}
 EOF
 
-        chmod 700 "${CONFIG_PATH}"/"${CONFIG_FILE}"
+        chmod 700 "${CONFIG_PATH%/}"/"${CONFIG_FILE}"
 
         if var_true "${ENABLE_CACHE}" ; then
             s3ql_cachedir_arg="--cachedir ${CACHE_PATH}"
@@ -71,8 +71,8 @@ EOF
 
         if [ "${LOG_TYPE,,}" = "file" ] ; then
             exec_arg=silent
-            log_fsck="${LOG_PATH}"/$(date +'%Y%m%d%H%M%S')-fsck_$(echo "${S3_HOST}" | cut -d / -f 4).log
-            log_mkfs="${LOG_PATH}"/$(date +'%Y%m%d%H%M%S')-mkfs_$(echo "${S3_HOST}" | cut -d / -f 4).log
+            log_fsck="${LOG_PATH%/}"/$(date +'%Y%m%d%H%M%S')-fsck_$(echo "${S3_HOST}" | cut -d / -f 4).log
+            log_mkfs="${LOG_PATH%/}"/$(date +'%Y%m%d%H%M%S')-mkfs_$(echo "${S3_HOST}" | cut -d / -f 4).log
         else
             log_fsck=none
             log_mkfs=none
@@ -82,7 +82,7 @@ EOF
         ${exec_arg} /opt/s3ql/bin/fsck.s3ql \
                 --batch \
                 --log ${log_fsck} \
-                --authfile "${CONFIG_PATH}"/"${CONFIG_FILE}" \
+                --authfile "${CONFIG_PATH%/}"/"${CONFIG_FILE}" \
                 --compress "${COMPRESSION}" \
                 ${s3ql_cachedir_arg} ${s3ql_cache_persistent_arg} "${S3_HOST}" ${FSCK_ARGS}
         fsck_ec=$?
@@ -93,14 +93,14 @@ EOF
                 backup_key=backup_$(echo "${S3_HOST}" | cut -d / -f 4).key
                 echo "${S3QL_PASS}" | /opt/s3ql/bin/mkfs.s3ql \
                                                                 --log "${log_mkfs}" \
-                                                                --authfile "${CONFIG_PATH}"/"${CONFIG_FILE}" \
-                                                                ${s3ql_cachedir_arg} ${MKFS_ARGS} "${S3_HOST}" | ${exec_arg} tee "${CONFIG_PATH}"/${backup_key}
+                                                                --authfile "${CONFIG_PATH%/}"/"${CONFIG_FILE}" \
+                                                                ${s3ql_cachedir_arg} ${MKFS_ARGS} "${S3_HOST}" | ${exec_arg} tee "${CONFIG_PATH%/}"/${backup_key}
                 print_notice "A backup key has been saved to '${CONFIG_PATH}/${backup_key}'. Please keep in a safe location if you ever lose your encryption key!"
             else
                 print_notice "Creating new unencrypted S3QL Filesystem on '${S3_HOST}'"
                 ${exec_arg} /opt/s3ql/bin/mkfs.s3ql \
                             --log "${log_mkfs}" \
-                            --authfile "${CONFIG_PATH}"/"${CONFIG_FILE}" \
+                            --authfile "${CONFIG_PATH%/}"/"${CONFIG_FILE}" \
                             --plain \
                             ${s3ql_cachedir_arg} ${MKFS_ARGS} "${S3_HOST}"
             fi

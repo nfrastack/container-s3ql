@@ -23,7 +23,7 @@ fi
 
 if [ "${LOG_TYPE,,}" = "file" ] ; then
     exec_arg=silent
-    log_s3ql="${LOG_PATH}"/$(date +'%Y%m%d%H%M%S')-mount_$(echo "${S3_HOST}" | cut -d / -f 4).log
+    log_s3ql="${LOG_PATH%/}"/$(date +'%Y%m%d%H%M%S')-mount_$(echo "${S3_HOST}" | cut -d / -f 4).log
 else
     log_s3ql="none"
 fi
@@ -36,7 +36,7 @@ liftoff
 source /opt/s3ql/bin/activate
 print_start "Starting $(/opt/s3ql/bin/s3qladm --version) for host: '${S3_HOST}'"
 ${exec_arg} exec /opt/s3ql/bin/mount.s3ql \
-                                        --authfile "${CONFIG_PATH}"/"${CONFIG_FILE}" \
+                                        --authfile "${CONFIG_PATH%/}"/"${CONFIG_FILE}" \
                                         --allow-other \
                                         --compress "${COMPRESSION}" \
                                         --fg \

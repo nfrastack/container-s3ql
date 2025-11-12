@@ -12,7 +12,7 @@ sanity_var S3_KEY_ID "S3 Key ID"
 sanity_var S3_KEY_SECRET "S3 Key Secret"
 
 fsck_cli_args=$@
-log_fsck="${LOG_PATH}"/$(date +%Y%m%d%H%M%S)-fsck_$(echo "${S3_HOST}" | cut -d / -f 4).log
+log_fsck="${LOG_PATH%/}"/$(date +%Y%m%d%H%M%S)-fsck_$(echo "${S3_HOST}" | cut -d / -f 4).log
 
 if var_true "${ENABLE_CACHE}" ; then
     s3ql_cachedir_arg="--cachedir ${CACHE_PATH}"
@@ -26,6 +26,6 @@ print_notice "Performing S3QL Filesystem check on '${S3_HOST}'"
 
 /opt/s3ql/bin/s3ql/fsck.s3ql \
                             --log ${log_fsck} \
-                            --authfile "${CONFIG_PATH}"/"${CONFIG_FILE}" \
+                            --authfile "${CONFIG_PATH%/}"/"${CONFIG_FILE}" \
                             --compress "${COMPRESSION}" \
                             ${s3ql_cachedir_arg} "${S3_HOST}" ${FSCK_ARGS} ${fsck_cli_args}
