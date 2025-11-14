@@ -80,11 +80,11 @@ EOF
 
         print_debug "Performing File System Check on Initialization"
         ${exec_arg} /opt/s3ql/bin/fsck.s3ql \
-                --batch \
-                --log ${log_fsck} \
-                --authfile "${CONFIG_PATH%/}"/"${CONFIG_FILE}" \
-                --compress "${COMPRESSION}" \
-                ${s3ql_cachedir_arg} ${s3ql_cache_persistent_arg} "${S3_HOST}" ${FSCK_ARGS}
+                                            --batch \
+                                            --log ${log_fsck} \
+                                            --authfile "${CONFIG_PATH%/}"/"${CONFIG_FILE}" \
+                                            --compress "${COMPRESSION}" \
+                                            ${s3ql_cachedir_arg} ${s3ql_cache_persistent_arg} "${S3_HOST}" ${FSCK_ARGS}
         fsck_ec=$?
 
         if [ ${fsck_ec} -eq 18 ]; then

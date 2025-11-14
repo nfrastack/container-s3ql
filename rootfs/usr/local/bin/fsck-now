@@ -24,7 +24,7 @@ source /opt/s3ql/bin/activate
 
 print_notice "Performing S3QL Filesystem check on '${S3_HOST}'"
 
-/opt/s3ql/bin/s3ql/fsck.s3ql \
+/opt/s3ql/bin/fsck.s3ql \
                             --log ${log_fsck} \
                             --authfile "${CONFIG_PATH%/}"/"${CONFIG_FILE}" \
                             --compress "${COMPRESSION}" \

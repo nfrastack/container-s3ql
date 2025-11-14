@@ -1,3 +1,9 @@
+## 2.0.4 2025-11-13 <dave at tiredofit dot ca>
+
+   ### Changed
+      - Fix fsck-now command
+
+
 ## 2.0.3 2025-11-01 <dave at tiredofit dot ca>
 
    ### Added
