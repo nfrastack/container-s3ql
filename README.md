@@ -103,39 +103,29 @@ Below is the complete list of available options that can be used to customize yo
 
 | Parameter         | Description                                                            | Default     | Advanced | `_FILE` |
 | ----------------- | ---------------------------------------------------------------------- | ----------- | -------- | ------- |
-| `S3QL_SETUP_MODE` | Auto Configure Configuration each startup - Set to `MANUAL` to disable | `AUTO`      |          | |
-| `CACHE_PATH`      | Cache Directory Path                                                   | `/cache/`   |          | |
-| `CONFIG_FILE`     | Configuration File with credentials                                    | `s3ql.conf` |          | |
-| `CONFIG_PATH`     | Configuration Path                                                     | `/config/`  |          | |
-| `DATA_PATH`       | Path to mount S3QL File System                                         | `/data/`    |          | |
-| `LOG_PATH`        | Path for Log Files                                                     | `/logs/`    |          | |
-| `LOG_TYPE`        | `CONSOLE` or `FILE`                                                    | `FILE`      |          | |
+| `S3QL_SETUP_MODE` | Auto Configure Configuration each startup - Set to `MANUAL` to disable | `AUTO`      |          |         |
+| `CACHE_PATH`      | Cache Directory Path                                                   | `/cache/`   |          |         |
+| `CONFIG_FILE`     | Configuration File with credentials                                    | `s3ql.conf` |          |         |
+| `CONFIG_PATH`     | Configuration Path                                                     | `/config/`  |          |         |
+| `DATA_PATH`       | Path to mount S3QL File System                                         | `/data/`    |          |         |
+| `LOG_PATH`        | Path for Log Files                                                     | `/logs/`    |          |         |
+| `LOG_TYPE`        | `CONSOLE` or `FILE`                                                    | `FILE`      |          |         |
 
 #### S3QL Configuration
 
 | Parameter                 | Description                                                             | Default  | Advanced | `_FILE` |
-| ------------------------- | ----------------------------------------------------------------------- | -------- | -------- | ---- |
-| `CACHE_SIZE`              | Cache size in KiB - eg `9765625` for 10GB or `auto`                     | `auto`   |          |  |
-| `COMPRESSION`             | Compresion type `none` `bzip` `lzma` `zlib` and compression level `0-9` | `lzma-6` |          | |
-| `ENABLE_CACHE`            | Enable Cache on File system                                             | `TRUE`   |          | |
-| `ENABLE_PERSISTENT_CACHE` | Enable Cache even after filesystem is not mounted                       | `TRUE`   |          | |
-| `FSCK_ARGS`               | Arguments to pass to fsck process on container start                    | ``       |          | x |
-| `MKFS_ARGS`               | Arguments to pass to mkfs process when making filesystem                | ``       |          | x|
-| `MOUNT_ARGS`              | Arguments to pass to mount process when mounting filesystem             | ``       |          | x|
-| `S3_KEY_ID`               | S3 Key ID                                                               | ``       |          | x |
-| `S3_KEY_SECRET`           | S3 Key Secret                                                           | ``       |          | x |
-| `S3_URI`                  | URI of S3 Bucket eg `s3c://s3.provider:443/bucket_name`                 | ``       |          | x |
-| `S3QL_PASS`               | (Optional) Encrypted password for S3QL Filesystem                       | ``       |          | x|
-
-## Users and Groups
-
-| Type | Name | ID  |
-| ---- | ---- | --- |
-
-### Networking
-
-| Port | Protocol | Description |
-| ---- | -------- | ----------- |
+| ------------------------- | ----------------------------------------------------------------------- | -------- | -------- | ------- |
+| `CACHE_SIZE`              | Cache size in KiB - eg `9765625` for 10GB or `auto`                     | `auto`   |          |         |
+| `COMPRESSION`             | Compresion type `none` `bzip` `lzma` `zlib` and compression level `0-9` | `lzma-6` |          |         |
+| `ENABLE_CACHE`            | Enable Cache on File system                                             | `TRUE`   |          |         |
+| `ENABLE_PERSISTENT_CACHE` | Enable Cache even after filesystem is not mounted                       | `TRUE`   |          |         |
+| `FSCK_ARGS`               | Arguments to pass to fsck process on container start                    | ``       |          | x       |
+| `MKFS_ARGS`               | Arguments to pass to mkfs process when making filesystem                | ``       |          | x       |
+| `MOUNT_ARGS`              | Arguments to pass to mount process when mounting filesystem             | ``       |          | x       |
+| `S3_KEY_ID`               | S3 Key ID                                                               | ``       |          | x       |
+| `S3_KEY_SECRET`           | S3 Key Secret                                                           | ``       |          | x       |
+| `S3_URI`                  | URI of S3 Bucket eg `s3c://s3.provider:443/bucket_name`                 | ``       |          | x       |
+| `S3QL_PASS`               | (Optional) Encrypted password for S3QL Filesystem                       | ``       |          | x       |
 
 * * *
 

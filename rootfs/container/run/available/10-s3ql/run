@@ -17,7 +17,7 @@ if var_true "${ENABLE_CACHE}" ; then
     fi
 
     if var_true "${ENABLE_PERSISTENT_CACHE}" ; then
-        s3ql_cache_peresistent_arg="--keep-cache"
+        s3ql_cache_persistent_arg="--keep-cache"
     fi
 fi
 

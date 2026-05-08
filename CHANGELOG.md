@@ -1,3 +1,12 @@
+## 2.0.7 2026-05-08 <code at nfrastack dot com>
+
+   ### Added
+      - S3QL 6.1.0
+
+   ### Changed
+      - Fix Issue introduced limiting the ability for cache to be persisted
+
+
 ## 2.0.6 2026-03-18 <code at nfastack dot com>
 
    ### Added

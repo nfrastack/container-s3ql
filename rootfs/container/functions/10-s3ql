@@ -48,7 +48,7 @@ s3ql_setup_s3ql() {
         if [ -n "${S3QL_PASS}" ]; then
             s3ql_filesystem_encryption="fs-passphrase: ${S3QL_PASS}"
         fi
-        cat << EOF > "${CONFIG_PATH%/}"/"${CONFIG_FILE}"
+        write_file "${CONFIG_PATH%/}"/"${CONFIG_FILE}":700 <<EOF
 ## Auto Generated S3QL Configuration - Do not edit, instead set ENV Vars
 ## If you do want to edit this file and add your own custom, set the environment variable 'S3QL_SETUP_TYPE=MANUAL' for next restart of container.
 ## Last Generated on $(TZ=${TIMEZONE} date +'%Y-%m-%d %H:%M:%S %Z')
@@ -59,8 +59,6 @@ backend-login: ${S3_KEY_ID}
 backend-password: ${S3_KEY_SECRET}
 ${s3ql_filesystem_encryption}
 EOF
-
-        chmod 700 "${CONFIG_PATH%/}"/"${CONFIG_FILE}"
 
         if var_true "${ENABLE_CACHE}" ; then
             s3ql_cachedir_arg="--cachedir ${CACHE_PATH}"
