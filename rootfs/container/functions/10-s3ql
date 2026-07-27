@@ -57,6 +57,7 @@ s3ql_setup_s3ql() {
 storage-url: ${S3_HOST}
 backend-login: ${S3_KEY_ID}
 backend-password: ${S3_KEY_SECRET}
+compress: ${COMPRESSION}
 ${s3ql_filesystem_encryption}
 EOF
 
@@ -81,7 +82,6 @@ EOF
                                             --batch \
                                             --log ${log_fsck} \
                                             --authfile "${CONFIG_PATH%/}"/"${CONFIG_FILE}" \
-                                            --compress "${COMPRESSION}" \
                                             ${s3ql_cachedir_arg} ${s3ql_cache_persistent_arg} "${S3_HOST}" ${FSCK_ARGS}
         fsck_ec=$?
 
@@ -89,18 +89,21 @@ EOF
             if [ -n "${S3QL_PASS}" ]; then
                 print_notice "Creating new encrypted S3QL Filesystem on '${S3_HOST}'"
                 backup_key=backup_$(echo "${S3_HOST}" | cut -d / -f 4).key
-                echo "${S3QL_PASS}" | /opt/s3ql/bin/mkfs.s3ql \
-                                                                --log "${log_mkfs}" \
+                mkfs_output=$(echo "${S3QL_PASS}" | /opt/s3ql/bin/mkfs.s3ql \
                                                                 --authfile "${CONFIG_PATH%/}"/"${CONFIG_FILE}" \
-                                                                ${s3ql_cachedir_arg} ${MKFS_ARGS} "${S3_HOST}" | ${exec_arg} tee "${CONFIG_PATH%/}"/${backup_key}
+                                                                ${s3ql_cachedir_arg} ${MKFS_ARGS} "${S3_HOST}" 2>&1)
+                echo "${mkfs_output}" | sed -n '/^Please store/,/^---END MASTER KEY---$/p' | write_file root@"${CONFIG_PATH%/}"/${backup_key}
+                if [ "${log_mkfs}" != "none" ] ; then
+                    echo "${mkfs_output}" | write_file root@"${log_mkfs}"
+                fi
                 print_notice "A backup key has been saved to '${CONFIG_PATH}/${backup_key}'. Please keep in a safe location if you ever lose your encryption key!"
             else
                 print_notice "Creating new unencrypted S3QL Filesystem on '${S3_HOST}'"
-                ${exec_arg} /opt/s3ql/bin/mkfs.s3ql \
-                            --log "${log_mkfs}" \
+                /opt/s3ql/bin/mkfs.s3ql \
                             --authfile "${CONFIG_PATH%/}"/"${CONFIG_FILE}" \
                             --plain \
-                            ${s3ql_cachedir_arg} ${MKFS_ARGS} "${S3_HOST}"
+                            ${s3ql_cachedir_arg} ${MKFS_ARGS} "${S3_HOST}" \
+                            2>&1 | if [ "${log_mkfs}" = "none" ] ; then cat; else write_file root@"${log_mkfs}"; fi
             fi
         elif [ "${fsck_ec}" -ne 0 ]; then
             print_error "Detected problems with the file system with exit code '${fsck_ec}'. Halting.."
