@@ -20,6 +20,6 @@ fi
 print_notice "Performing S3QL Filesystem check on '${S3_HOST}'"
 source /opt/s3ql/bin/activate
 /opt/s3ql/bin/s3qladm \
-                        --log ${log_upgrade} \
                         --authfile "${CONFIG_PATH%/}"/"${CONFIG_FILE}" \
-                        ${s3ql_cachedir_arg} upgrade "${S3_HOST}"
+                        ${s3ql_cachedir_arg} upgrade "${S3_HOST}" \
+                        2>&1 | write_file root@"${log_upgrade}"
