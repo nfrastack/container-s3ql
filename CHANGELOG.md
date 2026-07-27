@@ -1,3 +1,13 @@
+## 2.0.11 2026-07-27 <code at nfrastack dot com>
+
+   ### Added
+      - S3QL 6.3.0
+
+   ### Changed
+      - Change way logging occurs for mkfs and fsck operations
+      - Strip compression from arguments and rely on configuration
+
+
 ## 2.0.10 2026-06-08 <code at nfrastack dot com>
 
    ### Added
@@ -35,7 +45,7 @@
 
    ### Added
       - S3QL 5.4.2
-      - Alpine 3.23 base
+      - Alpine 3.2e base
 
 
 ## 2.0.4 2025-11-13 <dave at tiredofit dot ca>
