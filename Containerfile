@@ -19,7 +19,7 @@ LABEL \
 
 ARG \
     S3QL_REPO_URL="https://github.com/s3ql/s3ql" \
-    S3QL_VERSION="s3ql-6.2.2"
+    S3QL_VERSION="s3ql-6.3.0"
 
 COPY CHANGELOG.md /usr/src/container/CHANGELOG.md
 COPY LICENSE /usr/src/container/LICENSE
@@ -34,7 +34,6 @@ RUN echo "" && \
     S3QL_BUILD_DEPS_ALPINE=" \
                                 attr-dev \
                                 build-base \
-                                #cython \
                                 fuse-dev \
                                 fuse3-dev  \
                                 git \
