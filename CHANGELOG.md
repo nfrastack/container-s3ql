@@ -1,3 +1,9 @@
+## 2.0.12 2026-09-24 <code at nfrastack dot com>
+
+   ### Added
+      - S3QL 6.3.1
+
+
 ## 2.0.11 2026-07-27 <code at nfrastack dot com>
 
    ### Added
